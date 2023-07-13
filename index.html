@@ -1,49 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    body {
-      background: #111;
-      color: #411;
-      font-family: Consolas, Courier, monospace;
-      font-size: 60px;
-      text-shadow: 0 0 15px #411;
-      height: 100%;
-    }
+<style>
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
-    div {
-      position: relative;
-      top: 50%;
-      margin: -30px auto;
-      text-align: center;
-    }
+#matrix {
+  font-family: 'Courier New', monospace;
+  font-size: 2rem;
+  color: green;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  animation: matrix-effect 5s infinite;
+}
 
-    .glow {
-      color: #f00;
-      text-shadow: 0px 0px 10px #f00;
-    }
-
-    span {
-      display: inline-block;
-      padding: 0 10px;
-    }
-  </style>
+@keyframes matrix-effect {
+  0% {
+    content: "C";
+  }
+  10% {
+    content: "Cy";
+  }
+  20% {
+    content: "C";
+  }
+  30% {
+    content: "Cyb";
+  }
+  40% {
+    content: "C";
+  }
+  50% {
+    content: "Cybe";
+  }
+  60% {
+    content: "C";
+  }
+  70% {
+    content: "Cyber";
+  }
+  80% {
+    content: "C";
+  }
+  90% {
+    content: "Cyber ";
+  }
+  100% {
+    content: "Cyber Security";
+  }
+}
+</style>
 </head>
 <body>
-  <div>
-    <form>
-      <select name="programmingLanguage">
-        <option value="webshell">Webshell</option>
-        <option value="netcat">Netcat</option>
-        <option value="python">Python</option>
-        <option value="ruby">Ruby</option>
-        <option value="rust">Rust</option>
-        <option value="cpp">C++</option>
-      </select>
-      <br><br>
-      <input type="submit" value="Submit">
-    </form>
-    <div id="loading">LOADING</div>
-  </div>
+<div id="matrix"></div>
 </body>
 </html>
