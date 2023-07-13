@@ -1,94 +1,231 @@
-<!DOCTYPE html>
+Here is a possible HTML code that will create a black background with a spider web-like network of strings and floating elements. You can copy and paste it into a text editor and save it as a .html file to see the result.
+
+```html
 <html>
 <head>
 <style>
 body {
   background-color: black;
   margin: 0;
-  padding: 0;
   overflow: hidden;
 }
 
-#matrix {
-  font-family: 'Courier New', monospace;
-  font-size: 2rem;
-  color: green;
+#web {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-  animation: matrix-effect 5s infinite;
+  width: 100%;
+  height: 100%;
 }
 
-@keyframes matrix-effect {
-  0% {
-    content: "";
-  }
-  5% {
-    content: "C";
-  }
-  10% {
-    content: "Cy";
-  }
-  15% {
-    content: "C";
-  }
-  20% {
-    content: "Cyb";
-  }
-  25% {
-    content: "C";
-  }
-  30% {
-    content: "Cybe";
-  }
-  35% {
-    content: "C";
-  }
-  40% {
-    content: "Cyber";
-  }
-  45% {
-    content: "C";
-  }
-  50% {
-    content: "Cyber ";
-  }
-  55% {
-    content: "C";
-  }
-  60% {
-    content: "Cyber S";
-  }
-  65% {
-    content: "C";
-  }
-  70% {
-    content: "Cyber Se";
-  }
-  75% {
-    content: "C";
-  }
-  80% {
-    content: "Cyber Sec";
-  }
-  85% {
-    content: "C";
-  }
-  90% {
-    content: "Cyber Secu";
-  }
-  95% {
-    content: "C";
-  }
-  100% {
-    content: "Cyber Security";
-  }
+.node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.link {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background-color: white;
+  transform-origin: top left;
+}
+
+.float {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  animation: float infinite ease-in-out alternate;
+}
+
+@keyframes float {
+  from { transform: translate(0,0); }
+  to { transform: translate(50px,50px); }
 }
 </style>
+<script>
+// create an array of nodes
+var nodes = [];
+
+// create an array of links
+var links = [];
+
+// create an array of floating elements
+var floats = [];
+
+// get the web element
+var web = document.getElementById("web");
+
+// get the width and height of the web element
+var width = web.offsetWidth;
+var height = web.offsetHeight;
+
+// create a function to generate a random number between min and max
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// create a function to create a node element
+function createNode(x, y) {
+  // create a node element
+  var node = document.createElement("div");
+  
+  // add the node class
+  node.classList.add("node");
+  
+  // set the node position
+  node.style.left = x + "px";
+  node.style.top = y + "px";
+  
+  // return the node element
+  return node;
+}
+
+// create a function to create a link element
+function createLink(x1, y1, x2, y2) {
+  
+   // calculate the distance between the two points
+   var distance = Math.sqrt(Math.pow(x2 - x1,2) + Math.pow(y2 - y1,2));
+   
+   // calculate the angle between the two points
+   var angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+   
+   // create a link element
+   var link = document.createElement("div");
+   
+   // add the link class
+   link.classList.add("link");
+   
+   // set the link position and size
+   link.style.left = x1 + "px";
+   link.style.top = y1 + "px";
+   link.style.width = distance + "px";
+   link.style.transform = "rotate(" + angle + "deg)";
+   
+   // return the link element
+   return link; 
+}
+
+// create a function to create a floating element
+function createFloat(x, y) {
+  
+   // create a float element
+   var float = document.createElement("div");
+   
+   // add the float class
+   float.classList.add("float");
+   
+   // set the float position
+   float.style.left = x + "px";
+   float.style.top = y + "px";
+   
+   // return the float element
+   return float; 
+}
+
+// create a function to generate nodes and links randomly
+function generateWeb() {
+  
+    // clear the web element
+    web.innerHTML = "";
+    
+    // clear the nodes and links arrays
+    nodes = [];
+    links = [];
+    
+    // generate a random number of nodes between 10 and 20
+    var numNodes = random(10,20);
+    
+    // loop through the number of nodes
+    for (var i = 0; i < numNodes; i++) {
+      
+      // generate a random position for the node within the web element
+      var x = random(0,width -10);
+      var y = random(0,height -10);
+      
+      // create a node element with the position
+      var node = createNode(x,y);
+      
+      // add the node element to the web element
+      web.appendChild(node);
+      
+      // add the node object to the nodes array
+      nodes.push({x:x,y:y,element:node});
+      
+    }
+    
+    // loop through the nodes array twice to create links between them
+    for (var i =0; i < nodes.length; i++) {
+      for (var j= i+1; j < nodes.length; j++) {
+        
+        // get the coordinates of the two nodes
+        var x1 = nodes[i].x;
+        var y1 = nodes[i].y;
+        var x2 = nodes[j].x;
+        var y2 = nodes[j].y;
+        
+        // create a link element with the coordinates
+        var link = createLink(x1,y1,x2,y2);
+        
+        // add the link element to the web element
+        web.appendChild(link);
+        
+        // add the link object to the links array
+        links.push({x1:x1,y1:y1,x2:x2,y2:y2,element:link});
+        
+      }
+    }
+    
+}
+
+// create a function to generate floating elements randomly
+function generateFloats() {
+  
+    // clear the floats array
+    floats = [];
+    
+    // generate a random number of floats between 5 and 10
+    var numFloats = random(5,10);
+    
+    // loop through the number of floats
+    for (var i = 0; i < numFloats; i++) {
+      
+      // generate a random position for the float within the web element
+      var x = random(0,width -20);
+      var y = random(0,height -20);
+      
+      // create a float element with the position
+      var float = createFloat(x,y);
+      
+      // add the float element to the web element
+      web.appendChild(float);
+      
+      // add the float object to the floats array
+      floats.push({x:x,y:y,element:float});
+      
+    }
+    
+}
+
+// call the generateWeb function to create the initial web
+generateWeb();
+
+// call the generateFloats function to create the initial floats
+generateFloats();
+
+// set an interval to regenerate the web every 10 seconds
+setInterval(generateWeb,10000);
+
+// set an interval to regenerate the floats every 5 seconds
+setInterval(generateFloats,5000);
+
+</script>
 </head>
 <body>
-<div id="matrix"></div>
+<div id="web"></div>
 </body>
 </html>
+```
